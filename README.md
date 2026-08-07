@@ -4,24 +4,20 @@ Klondike solitaire for GNUstep. Uses [SmallStepLib](../SmallStepLib) for app lif
 
 ## Build
 
-1. Build and install SmallStepLib:
-   ```bash
-   cd ../SmallStepLib && make && sudo make install
-   ```
-   Or build only (link from `SmallSolitaire.app` to the framework in SmallStepLib):
+1. Build SmallStepLib:
    ```bash
    cd ../SmallStepLib && make
    ```
 
 2. Build SmallSolitaire:
    ```bash
-   cd SmallSolitaire && make
+   cd ../Solitaire && make
    ```
 
 ## Run
 
 ```bash
-openapp ./SmallSolitaire.app/SmallSolitaire
+openapp ./SmallSolitaire.app
 ```
 
 Or from an environment where GNUstep is set up:

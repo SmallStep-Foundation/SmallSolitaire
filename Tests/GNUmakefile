@@ -7,15 +7,8 @@
 include $(GNUSTEP_MAKEFILES)/common.make
 
 # From Tests/ we have .. = SmallSolitaire, so SmallStepLib is ../../SmallStepLib
-SMALLSTEP_FRAMEWORK := $(shell find ../../SmallStepLib -name "SmallStep.framework" -type d 2>/dev/null | head -1)
-ifneq ($(SMALLSTEP_FRAMEWORK),)
-  SMALLSTEP_LIB_DIR := $(shell cd $(SMALLSTEP_FRAMEWORK)/Versions/0 2>/dev/null && pwd)
-  SMALLSTEP_LIB_PATH := -L$(SMALLSTEP_LIB_DIR)
-  SMALLSTEP_LDFLAGS := -Wl,-rpath,$(SMALLSTEP_LIB_DIR)
-else
-  SMALLSTEP_LIB_PATH :=
-  SMALLSTEP_LDFLAGS :=
-endif
+# SmallStep framework (shared discovery - SmallStepLib/GNUmakefile.include)
+-include ../../SmallStepLib/GNUmakefile.include
 
 TOOL_NAME = test_SmallSolitaire
 test_SmallSolitaire_OBJC_FILES = \
@@ -25,7 +18,7 @@ test_SmallSolitaire_OBJC_FILES = \
 	../UI/SolitaireView.m
 
 test_SmallSolitaire_INCLUDE_DIRS = -I.. -I../App -I../UI
-test_SmallSolitaire_INCLUDE_DIRS += -I../../SmallStepLib/SmallStep/Core -I../../SmallStepLib/SmallStep/Platform/Linux
+test_SmallSolitaire_INCLUDE_DIRS += $(SMALLSTEP_INCLUDE_DIRS)
 test_SmallSolitaire_INCLUDE_DIRS += -I../../SmallStepLib/Tests
 test_SmallSolitaire_TOOL_LIBS = -lSmallStep -lgnustep-gui -lgnustep-base -lobjc
 test_SmallSolitaire_LDFLAGS = $(SMALLSTEP_LIB_PATH) $(SMALLSTEP_LDFLAGS) -Wl,--allow-shlib-undefined
